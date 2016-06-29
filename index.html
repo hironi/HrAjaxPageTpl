@@ -1,0 +1,125 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>layPage demo</title>
+<meta name="keywords" content="分页插件,ajax分页,异步分页">
+<meta name="description" content="laypage不依赖于任何第三方库，直接拿来用即可">
+<style>
+    li{
+        border:1px solid #ddd;
+        margin-top: -1px;
+    }
+    li:nth-child(even){
+        background: #f8d7e6;
+    }
+    ul{
+        text-align: center;
+    }
+    .loading-xxl{
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        vertical-align: middle;
+        background-image: url("http://i2.letvimg.com/lc05_lc_vrp/201606/23/16/02/1466668947335new.gif");
+        background-repeat: no-repeat;
+        background-size: 100%;
+    }
+</style>
+</head>
+<body>
+<ul id="leCon"></ul>
+<div id="leLayerPage"></div>
+    
+<script type="text/html" id="tplCity">
+{{each items as v}}
+<li>
+    <p>{{v.name}}</p>
+    <p>{{v.number}}</p>
+</li>
+{{/each}}
+<ul id="leCon2"></ul>
+<div id="leLayerPage2"></div>
+</script>
+<script src="js/jquery.js"></script>
+<script src="js/laypage.js"></script>
+<script src="js/template.js"></script>
+<script src="js/hrPageTpl.js"></script>
+<script>
+/*从后台响应的数据格式为：
+{
+    "code":0,
+    "data":{
+        "items":[
+            {
+                "city":"北京",
+                "number":392
+            }
+        ],
+        "page":{
+            "curPage":1,
+            "pageSize":2,
+            "totalPage":2,
+            "totalRow":2
+        }
+    },
+    "msg":"成功"
+}*/
+
+$(function(){
+    // 使用demo:
+    // --------/s
+        var needData = {
+            curPage:1,
+            pageSize : 10,
+            name : "hr"
+        };
+        var needData2 = {
+            curPage:1,
+            pageSize : 10,
+            name : "hr2"
+        };
+        var thisAjax = new HrPageTpl({
+            elPage : $("#leLayerPage"), //不设置elPage的话即不启用分页，设置了这个属性就启用了分页，值为分页的容器
+            elTpl : "tplCity",
+            elTplBox : $("#leCon")
+        });
+        thisAjax.ajax({
+            url:"success.json",
+            data : needData,
+            success:function(data){
+                var data = typeof data == "string" ? JSON.parse(data) : data;
+                thisAjax.setPageTpl(data.data,function(_this,data){ 
+                //调用模板分页插件整合函数后的回调函数，方便在渲染完页面后按需做二次修改
+                    // console.log(_this); // 当前实例的this指针，
+                    // console.log(data); // 用于分页和渲染模板的数据
+                    // 分页内嵌套分页：
+                    var thisAjax2 = new HrPageTpl({
+                        elPage : $("#leLayerPage2"), //不设置elPage的话即不启用分页，设置了这个属性就启用了分页，值为分页的容器
+                        elTpl : "tplCity",
+                        elTplBox : $("#leCon2")
+                    });
+                    thisAjax2.ajax({
+                        url:"success2.json",
+                        data : needData2,
+                        success:function(data){
+                            var data = typeof data == "string" ? JSON.parse(data) : data;
+                            thisAjax2.setPageTpl(data.data);
+                        }
+                    },null,function(xhr){
+                        // 请求失败的回调函数，（一般在error完成回调）为特殊需要时预留：
+                        console.log(xhr);
+                    });
+                });
+            }
+        },function(data){
+            // 请求成功的回调函数，（一般在success完成回调）为特殊需要时预留：
+            console.log(data);
+        });
+    // --------/e
+    
+})
+
+</script>
+</body>
+</html>
