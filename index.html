@@ -85,7 +85,7 @@ $(function(){
             elTplBox : $("#leCon")
         });
         thisAjax.ajax({
-            url:"success.json",
+            url:"json/success01.json",
             data : needData,
             success:function(data){
                 var data = typeof data == "string" ? JSON.parse(data) : data;
@@ -100,7 +100,7 @@ $(function(){
                         elTplBox : $("#leCon2")
                     });
                     thisAjax2.ajax({
-                        url:"success2.json",
+                        url:"json/success02.json",
                         data : needData2,
                         success:function(data){
                             var data = typeof data == "string" ? JSON.parse(data) : data;
