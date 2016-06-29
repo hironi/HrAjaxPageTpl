@@ -27,6 +27,8 @@
 	HrPageTpl.prototype.ajax = function(_obj,successfn,errorfn){
 	    var init_data = { //ajax请求的默认项
 	        type : "GET",
+	        cache : false,//关闭ajax请求缓存
+	        contentType : "application/x-www-form-urlencoded",
 	        timeout : 10000
 	    };
 	    // 请求开始前的loading效果：
