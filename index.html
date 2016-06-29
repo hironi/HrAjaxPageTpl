@@ -1,85 +1,125 @@
 <!doctype html>
-<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
-<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on https://github.com/jonrohan -->
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen">
-  <link rel="stylesheet" href="stylesheets/github-dark.css">
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="javascripts/script.js"></script>
-
-  <title>Hrpagetpl</title>
-  <meta name="description" content="HrPageTpl 封装laypage和artTemplate插件">
-
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-
+<meta charset="utf-8">
+<title>layPage demo</title>
+<meta name="keywords" content="分页插件,ajax分页,异步分页">
+<meta name="description" content="laypage不依赖于任何第三方库，直接拿来用即可">
+<style>
+    li{
+        border:1px solid #ddd;
+        margin-top: -1px;
+    }
+    li:nth-child(even){
+        background: #f8d7e6;
+    }
+    ul{
+        text-align: center;
+    }
+    .loading-xxl{
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        vertical-align: middle;
+        background-image: url("http://i2.letvimg.com/lc05_lc_vrp/201606/23/16/02/1466668947335new.gif");
+        background-repeat: no-repeat;
+        background-size: 100%;
+    }
+</style>
 </head>
-
 <body>
+<ul id="leCon"></ul>
+<div id="leLayerPage"></div>
+    
+<script type="text/html" id="tplCity">
+{{each items as v}}
+<li>
+    <p>{{v.name}}</p>
+    <p>{{v.number}}</p>
+</li>
+{{/each}}
+<ul id="leCon2"></ul>
+<div id="leLayerPage2"></div>
+</script>
+<script src="js/jquery.js"></script>
+<script src="js/laypage.js"></script>
+<script src="js/template.js"></script>
+<script src="js/hrPageTpl.js"></script>
+<script>
+/*从后台响应的数据格式为：
+{
+    "code":0,
+    "data":{
+        "items":[
+            {
+                "city":"北京",
+                "number":392
+            }
+        ],
+        "page":{
+            "curPage":1,
+            "pageSize":2,
+            "totalPage":2,
+            "totalRow":2
+        }
+    },
+    "msg":"成功"
+}*/
 
-  <div class="wrapper">
-    <header>
-      <h1 class="title">Hrpagetpl</h1>
-    </header>
-    <div id="container">
-      <p class="tagline">ffffffHrPageTpl 封装laypage和artTemplate插件</p>
-      <div id="main" role="main">
-        <div class="download-bar">
-        <div class="inner">
-          <a href="https://github.com/whrweb/hrpagetpl/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/whrweb/hrpagetpl/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/whrweb/hrpagetpl" class="code">View Hrpagetpl on GitHub</a>
-        </div>
-        <span class="blc"></span><span class="trc"></span>
-        </div>
-        <article class="markdown-body">
-          <h3>
-<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+$(function(){
+    // 使用demo:
+    // --------/s
+        var needData = {
+            curPage:1,
+            pageSize : 10,
+            name : "hr"
+        };
+        var needData2 = {
+            curPage:1,
+            pageSize : 10,
+            name : "hr2"
+        };
+        var thisAjax = new HrPageTpl({
+            elPage : $("#leLayerPage"), //不设置elPage的话即不启用分页，设置了这个属性就启用了分页，值为分页的容器
+            elTpl : "tplCity",
+            elTplBox : $("#leCon")
+        });
+        thisAjax.ajax({
+            url:"success.json",
+            data : needData,
+            success:function(data){
+                var data = typeof data == "string" ? JSON.parse(data) : data;
+                thisAjax.setPageTpl(data.data,function(_this,data){ 
+                //调用模板分页插件整合函数后的回调函数，方便在渲染完页面后按需做二次修改
+                    // console.log(_this); // 当前实例的this指针，
+                    // console.log(data); // 用于分页和渲染模板的数据
+                    // 分页内嵌套分页：
+                    var thisAjax2 = new HrPageTpl({
+                        elPage : $("#leLayerPage2"), //不设置elPage的话即不启用分页，设置了这个属性就启用了分页，值为分页的容器
+                        elTpl : "tplCity",
+                        elTplBox : $("#leCon2")
+                    });
+                    thisAjax2.ajax({
+                        url:"success2.json",
+                        data : needData2,
+                        success:function(data){
+                            var data = typeof data == "string" ? JSON.parse(data) : data;
+                            thisAjax2.setPageTpl(data.data);
+                        }
+                    },null,function(xhr){
+                        // 请求失败的回调函数，（一般在error完成回调）为特殊需要时预留：
+                        console.log(xhr);
+                    });
+                });
+            }
+        },function(data){
+            // 请求成功的回调函数，（一般在success完成回调）为特殊需要时预留：
+            console.log(data);
+        });
+    // --------/e
+    
+})
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here <a href="https://guides.github.com/features/mastering-markdown/">using GitHub Flavored Markdown</a>, select a template crafted by a designer, and publish. After your page is generated, you can check out the new <code>gh-pages</code> branch locally. If you’re using GitHub Desktop, simply sync your repository and you’ll see the new branch.</p>
-
-<h3>
-<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Designer Templates</h3>
-
-<p>We’ve crafted some handsome templates for you to use. Go ahead and click 'Continue to layouts' to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved.</p>
-
-<h3>
-<a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating pages manually</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://help.github.com/articles/basic-writing-and-formatting-syntax/#mentioning-users-and-teams" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor’s GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out our <a href="https://help.github.com/pages">documentation</a> or <a href="https://github.com/contact">contact support</a> and we’ll help you sort it out.</p>
-        </article>
-      </div>
-    </div>
-    <footer>
-      <div class="owner">
-      <p><a href="https://github.com/whrweb" class="avatar"><img src="https://avatars0.githubusercontent.com/u/13896347?v=3&amp;s=60" width="48" height="48"></a> <a href="https://github.com/whrweb">whrweb</a> maintains <a href="https://github.com/whrweb/hrpagetpl">Hrpagetpl</a></p>
-
-
-      </div>
-      <div class="creds">
-        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
-      </div>
-    </footer>
-  </div>
-  <div class="current-section">
-    <a href="#top">Scroll to top</a>
-    <a href="https://github.com/whrweb/hrpagetpl/tarball/master" class="tar">tar</a><a href="https://github.com/whrweb/hrpagetpl/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
-    <p class="name"></p>
-  </div>
-
-  
+</script>
 </body>
 </html>
