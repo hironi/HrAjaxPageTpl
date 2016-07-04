@@ -66,7 +66,7 @@ $(function(){
             pageSize : 10,
             name : "hr2"
         };
-        var thisAjax = new HrAjaxPageTpl({
+        var thisAjax = new leAjaxPageTpl({
             elPage : $("#leLayerPage"), //不设置elPage的话即不启用分页，设置了这个属性就启用了分页，值为分页的容器
             elTpl : "tplCity",
             elTplBox : $("#leCon")
@@ -81,7 +81,7 @@ $(function(){
                     // console.log(_this); // 当前实例的this指针，
                     // console.log(data); // 用于分页和渲染模板的数据
                     // 分页内嵌套分页：
-                    var thisAjax2 = new HrAjaxPageTpl({
+                    var thisAjax2 = new leAjaxPageTpl({
                         elPage : $("#leLayerPage2"), //不设置elPage的话即不启用分页，设置了这个属性就启用了分页，值为分页的容器
                         elTpl : "tplCity",
                         elTplBox : $("#leCon2")
