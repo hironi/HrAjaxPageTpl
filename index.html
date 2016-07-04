@@ -7,6 +7,7 @@
 </head>
 <body>
 <h2>HrPageTpl 封装laypage 和 artTemplate</h2>
+<p>HrAjaxPageTpl 封装ajax方法使用laypage和artTemplate插件，可单独使用ajax方法 /By hairong.W</p>
 <p>因为请求的是一个本地写死的json文件，所以点击分页不会有“效果”，所以查看时请打开network，就可以看到请求的参数变化和请求回的数据了</p>
 <ul id="leCon"></ul>
 <div id="leLayerPage"></div>
@@ -48,6 +49,13 @@
 
 $(function(){
     // 使用demo:
+    //单独使用ajax方法/s：
+    var leajax = new HrAjaxPageTpl();
+    leajax.ajax({
+        //...
+    });
+    //单独使用ajax方法/e：
+    
     // --------/s
         var needData = {
             curPage:1,
@@ -59,7 +67,7 @@ $(function(){
             pageSize : 10,
             name : "hr2"
         };
-        var thisAjax = new HrPageTpl({
+        var thisAjax = new HrAjaxPageTpl({
             elPage : $("#leLayerPage"), //不设置elPage的话即不启用分页，设置了这个属性就启用了分页，值为分页的容器
             elTpl : "tplCity",
             elTplBox : $("#leCon")
@@ -74,7 +82,7 @@ $(function(){
                     // console.log(_this); // 当前实例的this指针，
                     // console.log(data); // 用于分页和渲染模板的数据
                     // 分页内嵌套分页：
-                    var thisAjax2 = new HrPageTpl({
+                    var thisAjax2 = new HrAjaxPageTpl({
                         elPage : $("#leLayerPage2"), //不设置elPage的话即不启用分页，设置了这个属性就启用了分页，值为分页的容器
                         elTpl : "tplCity",
                         elTplBox : $("#leCon2")
