@@ -1,33 +1,18 @@
-﻿<!doctype html>
+<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>layPage demo</title>
-<meta name="keywords" content="分页插件,ajax分页,异步分页">
-<meta name="description" content="laypage不依赖于任何第三方库，直接拿来用即可">
-<style>
-    li{
-        border:1px solid #ddd;
-        margin-top: -1px;
-    }
-    li:nth-child(even){
-        background: #f8d7e6;
-    }
-    ul{
-        text-align: center;
-    }
-    .loading-xxl{
-        display: inline-block;
-        width: 50px;
-        height: 50px;
-        vertical-align: middle;
-        background-image: url("http://i2.letvimg.com/lc05_lc_vrp/201606/23/16/02/1466668947335new.gif");
-        background-repeat: no-repeat;
-        background-size: 100%;
-    }
-</style>
+<title>HrAjaxPageTpl 封装laypage 和 artTemplate</title>
+<link rel="stylesheet" type="text/css" href="css/base.css">
 </head>
 <body>
+<h2>HrAjaxPageTpl 封装laypage 和 artTemplate</h2>
+<p>HrAjaxPageTpl 封装ajax方法使用laypage和artTemplate插件，可单独使用ajax方法 /By hairong.W</p>
+<p>因为请求的是一个本地写死的json文件，所以点击分页不会有“效果”，所以查看时请打开network，就可以看到请求的参数变化和请求回的数据了</p>
+
+<h3>
+    以下是分页内嵌套分页的demo:
+</h3>
 <ul id="leCon"></ul>
 <div id="leLayerPage"></div>
     
@@ -44,7 +29,7 @@
 <script src="js/jquery.js"></script>
 <script src="js/laypage.js"></script>
 <script src="js/template.js"></script>
-<script src="js/hrPageTpl.js"></script>
+<script src="js/hrAjaxPageTpl.js"></script>
 <script>
 /*从后台响应的数据格式为：
 {
@@ -68,6 +53,13 @@
 
 $(function(){
     // 使用demo:
+    //单独使用ajax方法/s：
+    leAjax.ajax({
+        //...
+    });
+    //单独使用ajax方法/e：
+    
+    // 分页内嵌套分页
     // --------/s
         var needData = {
             curPage:1,
@@ -79,13 +71,13 @@ $(function(){
             pageSize : 10,
             name : "hr2"
         };
-        var thisAjax = new HrPageTpl({
+        var thisAjax = new leAjaxPageTpl({
             elPage : $("#leLayerPage"), //不设置elPage的话即不启用分页，设置了这个属性就启用了分页，值为分页的容器
             elTpl : "tplCity",
             elTplBox : $("#leCon")
         });
         thisAjax.ajax({
-            url:"success.json",
+            url:"json/success01.json",
             data : needData,
             success:function(data){
                 var data = typeof data == "string" ? JSON.parse(data) : data;
@@ -94,13 +86,13 @@ $(function(){
                     // console.log(_this); // 当前实例的this指针，
                     // console.log(data); // 用于分页和渲染模板的数据
                     // 分页内嵌套分页：
-                    var thisAjax2 = new HrPageTpl({
+                    var thisAjax2 = new leAjaxPageTpl({
                         elPage : $("#leLayerPage2"), //不设置elPage的话即不启用分页，设置了这个属性就启用了分页，值为分页的容器
                         elTpl : "tplCity",
                         elTplBox : $("#leCon2")
                     });
                     thisAjax2.ajax({
-                        url:"success2.json",
+                        url:"json/success02.json",
                         data : needData2,
                         success:function(data){
                             var data = typeof data == "string" ? JSON.parse(data) : data;
