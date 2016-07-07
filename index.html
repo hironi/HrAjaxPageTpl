@@ -2,13 +2,17 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>HrPageTpl 封装laypage 和 artTemplate</title>
+<title>HrAjaxPageTpl 封装laypage 和 artTemplate</title>
 <link rel="stylesheet" type="text/css" href="css/base.css">
 </head>
 <body>
-<h2>HrPageTpl 封装laypage 和 artTemplate</h2>
+<h2>HrAjaxPageTpl 封装laypage 和 artTemplate</h2>
 <p>HrAjaxPageTpl 封装ajax方法使用laypage和artTemplate插件，可单独使用ajax方法 /By hairong.W</p>
 <p>因为请求的是一个本地写死的json文件，所以点击分页不会有“效果”，所以查看时请打开network，就可以看到请求的参数变化和请求回的数据了</p>
+
+<h3>
+    以下是分页内嵌套分页的demo:
+</h3>
 <ul id="leCon"></ul>
 <div id="leLayerPage"></div>
     
@@ -55,6 +59,7 @@ $(function(){
     });
     //单独使用ajax方法/e：
     
+    // 分页内嵌套分页
     // --------/s
         var needData = {
             curPage:1,
