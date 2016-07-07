@@ -1,4 +1,4 @@
-/* HrPageTpl 封装laypage和artTemplate插件 /By hairong.W */
+/* HrAjaxPageTpl 封装ajax方法使用laypage和artTemplate插件，可单独使用ajax方法 /By hairong.W */
 (function(){
 
 	"use strict";
@@ -7,39 +7,45 @@
 		elPage ：分页的DOM容器
 		elTpl ：渲染模板的script容器
 		elTplBox : 渲染模板的DOM容器*/
-	function HrPageTpl(_obj){ //该函数将artTemplate和layerPage插件整合使用
-	    this.obj_data = {}; //缓存每次ajax请求时发送的obj
-	    this.obj = {
-	        leyerpage : {
-	            //不设置elPage的话即不启用分页，设置了这个属性就启用了分页
-	            elPage : _obj.elPage || ""//用来渲染的分页的容器，值支持id名、原生dom对象，jquery对象
-	        },
-	        template : {
-	            elTpl : _obj.elTpl || "", //用来渲染的script模板，值必须是id名
-	            elTplBox : _obj.elTplBox || "" //渲染后盛放html的容器，值支持原生dom对象，jquery对象
-	        }
-	    };
+	function HrAjaxPageTpl(_obj){ //该函数将artTemplate和layerPage插件整合使用
+	    if(_obj){
+	    	this.obj = {
+	    	    leyerpage : {
+	    	        //不设置elPage的话即不启用分页，设置了这个属性就启用了分页
+	    	        elPage : _obj.elPage || null//用来渲染的分页的容器，值支持id名、原生dom对象，jquery对象
+	    	    },
+	    	    template : {
+	    	        elTpl : _obj.elTpl || null, //用来渲染的script模板，值必须是id名
+	    	        elTplBox : _obj.elTplBox || null //渲染后盛放html的容器，值支持原生dom对象，jquery对象
+	    	    }
+	    	};
+	    }else{
+	    	this.obj = null
+	    }
 	}
 
 	/*@param [必选] _obj ajax请求的参数（包括url、data、success等）
 	@param [可选] successfn 请求成功后的预留的回调函数接口（一般在success完成回调）
 	@param [可选] errorfn 请求失败后的预留的回调函数接口（一般在error完成回调）*/
-	HrPageTpl.prototype.ajax = function(_obj,successfn,errorfn){
+	HrAjaxPageTpl.prototype.ajax = function(_obj,successfn,errorfn){
 	    var init_data = { //ajax请求的默认项
 	        type : "GET",
 	        cache : false,//关闭ajax请求缓存
 	        contentType : "application/x-www-form-urlencoded",
 	        timeout : 10000
 	    };
-	    // 请求开始前的loading效果：
-	     this.obj.template.elTplBox.html('<i class="loading-xxl"></i>');
 	    // url为必传项目，不传则报错
 	    if(!_obj.url || typeof _obj.url != "string" || _obj.url.length == 0){
 	        console.error("ajax请求中，url是必传项");
 	        return;
 	    }
+	    if(this.obj && this.obj.template.elTpl){
+	    	// 请求开始前的loading效果：
+	    	this.obj.template.elTplBox.html('<i class="loading-xxl"></i>');
+	    }
 	    // 启用分页功能才缓存请求数据
-	    if(this.obj.leyerpage.elPage){
+	    if(this.obj && this.obj.leyerpage.elPage){
+	    	this.obj_data = {}; //缓存每次ajax请求时发送的obj
 	        // 深度克隆ajax请求的data数据，避免修改原始请求data
 	        _obj.data = $.extend({},_obj.data);
 	        this.obj_data.obj = _obj;
@@ -66,7 +72,7 @@
 
 	/*@param [必选] _data 渲染模板、分页所需要的data数据
 	@param [可选] callback 渲染完模板、分页后的回调函数*/
-	HrPageTpl.prototype.setPageTpl = function(_data,callback){
+	HrAjaxPageTpl.prototype.setPageTpl = function(_data,callback){
 	    var _this = this;
 	    // _data //用来渲染tpl模板和分页的data数据
 	    // 启用模板：
@@ -117,6 +123,7 @@
 	        }
 	    }
 	}
-
-	window.HrPageTpl = HrPageTpl;
+	const hrajax = new HrAjaxPageTpl();
+	window.leAjax = hrajax;
+	window.leAjaxPageTpl = HrAjaxPageTpl;
 })();
