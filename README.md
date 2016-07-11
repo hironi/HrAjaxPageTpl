@@ -6,7 +6,6 @@ HrAjaxPageTpl 封装ajax方法使用laypage和artTemplate插件，可单独使�
 贴代码：
 /* HrAjaxPageTpl 封装ajax方法使用laypage和artTemplate插件，可单独使用ajax方法 /By hairong.W */
 
-/* HrAjaxPageTpl 封装ajax方法使用laypage和artTemplate插件，可单独使用ajax方法 /By hairong.W */
 (function(global){
 
 	"use strict";
