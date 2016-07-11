@@ -6,7 +6,8 @@ HrAjaxPageTpl 封装ajax方法使用laypage和artTemplate插件，可单独使�
 贴代码：
 /* HrAjaxPageTpl 封装ajax方法使用laypage和artTemplate插件，可单独使用ajax方法 /By hairong.W */
 
-(function(){
+/* HrAjaxPageTpl 封装ajax方法使用laypage和artTemplate插件，可单独使用ajax方法 /By hairong.W */
+(function(global){
 
 	"use strict";
 
@@ -130,7 +131,15 @@ HrAjaxPageTpl 封装ajax方法使用laypage和artTemplate插件，可单独使�
 	        }
 	    }
 	}
-	const hrajax = new HrAjaxPageTpl();
-	window.leAjax = hrajax;
-	window.leAjaxPageTpl = HrAjaxPageTpl;
-})();
+	// 直接使用ajax方法：
+	global.leAjax = new HrAjaxPageTpl();
+	// 不使用 `new` 来调用构造函数
+    global.leAjaxPageTpl = function( obj ) {
+        return new HrAjaxPageTpl( obj );
+    };
+    // 冻结该全局对象，避免被修改：
+    Object.freeze(leAjax);
+    Object.freeze(leAjaxPageTpl);
+
+})(this);
+
