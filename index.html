@@ -50,7 +50,6 @@
     },
     "msg":"成功"
 }*/
-
 $(function(){
     // 使用demo:
     //单独使用ajax方法/s：
@@ -71,47 +70,48 @@ $(function(){
             pageSize : 10,
             name : "hr2"
         };
-        var thisAjax = new leAjaxPageTpl({
+        var thisDemo01 = leAjaxPageTpl({
             elPage : $("#leLayerPage"), //不设置elPage的话即不启用分页，设置了这个属性就启用了分页，值为分页的容器
             elTpl : "tplCity",
             elTplBox : $("#leCon")
         });
-        thisAjax.ajax({
+        thisDemo01.ajax({
             url:"json/success01.json",
             data : needData,
             success:function(data){
                 var data = typeof data == "string" ? JSON.parse(data) : data;
-                thisAjax.setPageTpl(data.data,function(_this,data){ 
+                thisDemo01.setPageTpl(data.data,function(_this,data){ 
                 //调用模板分页插件整合函数后的回调函数，方便在渲染完页面后按需做二次修改
                     // console.log(_this); // 当前实例的this指针，
                     // console.log(data); // 用于分页和渲染模板的数据
+
                     // 分页内嵌套分页：
-                    var thisAjax2 = new leAjaxPageTpl({
+                    var thisDemo02 = leAjaxPageTpl({
                         elPage : $("#leLayerPage2"), //不设置elPage的话即不启用分页，设置了这个属性就启用了分页，值为分页的容器
                         elTpl : "tplCity",
                         elTplBox : $("#leCon2")
                     });
-                    thisAjax2.ajax({
+                    thisDemo02.ajax({
                         url:"json/success02.json",
                         data : needData2,
                         success:function(data){
                             var data = typeof data == "string" ? JSON.parse(data) : data;
-                            thisAjax2.setPageTpl(data.data);
+                            thisDemo02.setPageTpl(data.data);
                         }
-                    },null,function(xhr){
-                        // 请求失败的回调函数，（一般在error完成回调）为特殊需要时预留：
-                        console.log(xhr);
                     });
+
                 });
             }
         },function(data){
             // 请求成功的回调函数，（一般在success完成回调）为特殊需要时预留：
             console.log(data);
+        },function(xhr){
+            // 请求失败的回调函数，（一般在error完成回调）为特殊需要时预留：
+            console.log(xhr);
         });
     // --------/e
     
 })
-
 </script>
 </body>
 </html>
