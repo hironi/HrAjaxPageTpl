@@ -1,3 +1,5 @@
+项目页面已在http://whrweb.github.io/HrAjaxPageTpl/   可被预览
+
 <h2 class="text-center mb-15">HrAjaxPageTpl<small class="ml-25" style="display:inline-block">By hairong.W</small></h1>
     <h3>介绍：</h3>
     <p>1，把laypage和artTemplate封装到了一起使用，方便实用;</p>
@@ -19,8 +21,6 @@
         <span>3，layPage是一款多功能的js分页组件,介绍：</span>
         <a href="http://laypage.layui.com/">http://laypage.layui.com</a>
     </p>
-
-项目页面已在http://whrweb.github.io/HrAjaxPageTpl/   可被预览
 
 贴代码：
 
