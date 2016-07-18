@@ -1,4 +1,29 @@
-/* HrAjaxPageTpl 封装ajax方法使用laypage和artTemplate插件，可单独使用ajax方法 /By hairong.W */
+项目页面已在http://whrweb.github.io/HrAjaxPageTpl/   可被预览
+
+<h2 class="text-center mb-15">HrAjaxPageTpl<small class="ml-25" style="display:inline-block">By hairong.W</small></h1>
+    <h3>介绍：</h3>
+    <p>1，把laypage和artTemplate封装到了一起使用，方便实用;</p>
+    <p>2，可使用ajax方法在回调中渲染模板和分页，亦可单独使用封装好的ajax方法；</p>
+    <p>3，ajax方法已经设置了超时、404、及其他错误提示；可用ajax旧式请求回调，也支持jQuery的ajax的deferred链式回调写法；</p>
+    <p>4，该插件使用原型对象共享ajax和渲染模板方法，所以页面有多个分页和模板的渲染也不会影响性能；</p>
+    <p>5，可以单独使用模板而不开启模板；</p>
+    <p>
+        <span>6，github 地址: </span>
+        <a href="https://github.com/whrweb/HrAjaxPageTpl.git" title="https://github.com/whrweb/HrAjaxPageTpl.git">https://github.com/whrweb/HrAjaxPageTpl.git</a>
+    </p>
+    <h3 class="mt-15">依赖说明：</h3>
+    <p>1，依赖jQuery；</p>
+    <p>
+        <span>2，artTemplate是一款前端模板渲染引擎，介绍：</span>
+        <a href="https://github.com/aui/artTemplate">https://github.com/aui/artTemplate</a>
+    </p>
+    <p>
+        <span>3，layPage是一款多功能的js分页组件,介绍：</span>
+        <a href="http://laypage.layui.com/">http://laypage.layui.com</a>
+    </p>
+
+贴代码：
+
 (function(global){
 
 	"use strict";
@@ -148,3 +173,4 @@
     Object.freeze(hrAjaxPageTpl);
 
 })(this);
+

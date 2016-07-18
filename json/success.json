@@ -1,0 +1,32 @@
+{
+    "code":0,
+    "data":{
+        "items":[
+            {
+                "city":"北京",
+                "number":392,
+                "id":"5",
+                "way":"北方"
+            },
+            {
+                "city":"上海",
+                "number":245,
+                "id":"2",
+                "way":"沿海"
+            },
+            {
+                "city":"广州",
+                "number":285,
+                "id":"1",
+                "way":"南方"
+            }
+        ],
+        "page":{
+            "curPage":5,
+            "pageSize":3,
+            "totalPage":14,
+            "totalRow":41
+        }
+	},
+    "msg":"成功"
+}
