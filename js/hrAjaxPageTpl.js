@@ -73,8 +73,8 @@
 	        	alert("没有请求到页面，请刷新试试。（错误妈：404）");
 	        	return;
 	        }
-	        var responseText = (typeof xhr.responseText == "string" ? JSON.parse(xhr.responseText) : xhr.responseText);
-        	alert((responseText.msg || xhr.statusText) + '  错误码:('+ (xhr.status || "") +')');
+	        var responseJSON = xhr.responseJSON;
+        	alert((responseJSON && responseJSON.msg || xhr.statusText) + '  错误码:('+ (xhr.status || "") +')');
 	    });
 	};
 
