@@ -54,13 +54,13 @@ p{
 .loading-xxl{
     position: relative;
     left:50%;
-    margin-left:-25px;
+    margin-left:-60px;
     margin-top:25px;
     display: inline-block;
-    width: 50px;
+    width: 120px;
     height: 50px;
     vertical-align: middle;
-    background-image: url("http://i2.letvimg.com/lc05_lc_vrp/201606/23/16/02/1466668947335new.gif");
+    background-image: url("http://i1.letvimg.com/lc03_lecloud/201607/22/11/45/loading.gif");
     background-repeat: no-repeat;
     background-size: 100%;
 }
