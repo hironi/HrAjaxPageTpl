@@ -85,14 +85,7 @@ $(function(){
     });
     thisDemoObj.ajax({
         url:"json/success.json",
-        data : resultData,
-        success:function(data){
-            var data = typeof data == "string" ? JSON.parse(data) : data;
-            thisDemoObj.setPageTpl(data.data,function(_this,data){  //渲染完模板分页后的回调
-                // _this // 当前实例的this指针，
-                // data; // 用于分页和渲染模板的数据
-            });
-        }
+        data : resultData
     },function(data){ // 请求成功的deferred链式回调，参数为请求回的数据
         //console.log(data);
     },function(xhr){ // 请求失败的deferred链式回调，参数为请求回的数据
