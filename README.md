@@ -94,6 +94,7 @@
 		        // ajax请求成功的回调函数：
 		        successfn ? successfn(data) : "";
 		    }).fail(function(xhr){
+		    	$(".hr-ui-loading").hide(); //隐藏loading效果
 		        // 请求失败后的回调函数：
 		        errorfn ? errorfn(xhr) : "";
 		        //请求超时，错误提示“重新刷新”：
