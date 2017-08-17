@@ -1,5 +1,5 @@
 /* HrAjaxPageTpl 封装ajax方法使用laypage和artTemplate插件，可单独使用ajax方法 /By hairong.W */
-	(function(global){
+;(function(global){
 
 		"use strict";
 
@@ -151,13 +151,16 @@
 			}
 		};
 		// 直接使用ajax方法：
-		global.hrAjax = new HrAjaxPageTpl();
-		// 不使用 `new` 来调用构造函数
-	    global.hrAjaxPageTpl = function( obj ) {
-	        return new HrAjaxPageTpl( obj );
-	    };
-	    // 冻结该全局对象，避免被修改：
-	    Object.freeze(hrAjax);
-	    Object.freeze(hrAjaxPageTpl);
+		// window.hrAjax = new HrAjaxPageTpl();
 
-	})(this);
+		if(typeof define === 'function'){ // RequireJS && SeaJS
+		  define(function() {
+		      return hrAjaxPageTpl;
+		  });
+		}else if(typeof exports !== 'undefined'){ // NodeJS
+		   module.exports = hrAjaxPageTpl;
+		}else{
+		   this.TurnMsg = hrAjaxPageTpl;
+		}
+
+	})();
