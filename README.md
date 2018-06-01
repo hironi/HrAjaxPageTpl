@@ -1,4 +1,4 @@
-#### [点我预览](http://wanghairong-i.github.io/HrAjaxPageTpl)
+#### [点我预览](http://hironi.github.io/HrAjaxPageTpl)
 
 # HrAjaxPageTpl 
 
