@@ -1,4 +1,3 @@
-#### [点我预览](http://hironi.github.io/HrAjaxPageTpl)
 
 # HrAjaxPageTpl 
 
